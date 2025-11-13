@@ -101,6 +101,33 @@ export default function ContactPage() {
           </p>
         )}
       </div>
+
+      <style>{`
+        @keyframes fadeOut {
+          0% { opacity: 1; }
+          100% { opacity: 0; }
+        }
+
+        /* Fully responsive layout */
+        @media (max-width: 768px) {
+          div[style*="maxWidth: 600px"] {
+            margin: 50px 20px;
+            padding: 20px;
+          }
+          h1 {
+            font-size: 1.6rem !important;
+          }
+          p {
+            font-size: 1rem !important;
+          }
+        }
+
+        @media (min-width: 1200px) {
+          div[style*="maxWidth: 600px"] {
+            max-width: 700px;
+          }
+        }
+      `}</style>
     </div>
   );
 }

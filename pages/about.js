@@ -116,6 +116,34 @@ export default function AboutPage() {
           Because the future of Earth deserves the smartest DreamRoute. 🚗💨
         </p>
       </motion.div>
+
+      <style>{`
+        /* Responsive tweaks for all devices */
+        @media (max-width: 768px) {
+          motion-div {
+            margin: 50px 20px !important;
+            padding: 20px !important;
+          }
+          h1 {
+            font-size: 1.8rem !important;
+          }
+          p {
+            font-size: 1rem !important;
+          }
+          h2 {
+            font-size: 1.5rem !important;
+          }
+          h3 {
+            font-size: 1.2rem !important;
+          }
+        }
+
+        @media (min-width: 1200px) {
+          motion-div {
+            max-width: 900px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

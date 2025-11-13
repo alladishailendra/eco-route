@@ -186,7 +186,6 @@ export default function MapComponent() {
       return;
     }
 
-    // Clear old stuff safely
     if (routeRef.current && mapRef.current.hasLayer(routeRef.current)) {
       mapRef.current.removeLayer(routeRef.current);
       routeRef.current = null;
@@ -286,7 +285,7 @@ export default function MapComponent() {
   };
 
   return (
-    <div style={{ height: "100%", width: "100%", position: "relative" }}>
+    <div style={{ height: "100vh", width: "100vw", position: "relative" }}>
       <div className="search-container">
         <input placeholder="From" value={from} onChange={(e) => setFrom(e.target.value)} />
         <input placeholder="To" value={to} onChange={(e) => setTo(e.target.value)} />
@@ -333,15 +332,169 @@ export default function MapComponent() {
       </div>
 
       <style jsx>{`
-        .press-button { padding: 6px 10px; border-radius: 6px; margin: 2px; background: #1a73e8; color: #fff; border: none; cursor: pointer; transition: 0.1s; }
-        .press-button:active { transform: scale(0.95); }
-        .search-container { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; display: flex; gap: 6px; }
-        .top-right-buttons { position: absolute; top: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 6px; }
-        .bottom-right { position: absolute; bottom: 120px; right: 20px; z-index: 1000; }
-        .directions-panel { position: absolute; bottom: 160px; right: 20px; max-height: 300px; overflow-y: auto; width: 250px; background: #fff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.25); z-index: 1000; }
-        .navigation-bar { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; background: #fff; padding: 8px 16px; border-radius: 8px; font-weight: bold; box-shadow: 0 2px 12px rgba(0,0,0,0.25); }
-        .alerts-panel { position: absolute; bottom: 150px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 6px; }
-        .alerts-panel div { background: #ff5722; padding: 6px; border-radius: 6px; color: #fff; }
+        * { box-sizing: border-box; }
+
+        #map {
+          height: 100%;
+          width: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+
+        .press-button {
+          padding: 8px 14px;
+          border-radius: 8px;
+          margin: 3px;
+          background: #1a73e8;
+          color: #fff;
+          border: none;
+          cursor: pointer;
+          font-size: 0.9rem;
+          transition: 0.1s;
+        }
+
+        .press-button:active {
+          transform: scale(0.95);
+        }
+
+        .search-container {
+          position: absolute;
+          top: 10px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 1000;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+          justify-content: center;
+          background: rgba(255, 255, 255, 0.9);
+          padding: 8px 12px;
+          border-radius: 10px;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-container input {
+          padding: 8px 10px;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+          font-size: 0.9rem;
+          width: 140px;
+        }
+
+        .top-right-buttons {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          z-index: 1000;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+
+        .bottom-right {
+          position: absolute;
+          bottom: 130px;
+          right: 10px;
+          z-index: 1000;
+        }
+
+        .directions-panel {
+          position: absolute;
+          bottom: 160px;
+          right: 10px;
+          max-height: 300px;
+          overflow-y: auto;
+          width: 85vw;
+          max-width: 300px;
+          background: #fff;
+          padding: 10px;
+          border-radius: 10px;
+          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+          z-index: 1000;
+        }
+
+        .navigation-bar {
+          position: absolute;
+          bottom: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 1000;
+          background: #fff;
+          padding: 10px 20px;
+          border-radius: 10px;
+          font-weight: bold;
+          font-size: 1rem;
+          text-align: center;
+          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        .alerts-panel {
+          position: absolute;
+          bottom: 150px;
+          right: 10px;
+          z-index: 1000;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+
+        .alerts-panel div {
+          background: #ff5722;
+          padding: 6px;
+          border-radius: 6px;
+          color: #fff;
+          font-size: 0.9rem;
+        }
+
+        /* ✅ RESPONSIVE FIXES */
+        @media (max-width: 768px) {
+          .search-container {
+            top: 10px;
+            flex-direction: column;
+            width: 90%;
+          }
+          .search-container input {
+            width: 100%;
+          }
+          .top-right-buttons {
+            flex-direction: row;
+            bottom: 80px;
+            top: auto;
+            right: 50%;
+            transform: translateX(50%);
+          }
+          .directions-panel {
+            bottom: 200px;
+            width: 90%;
+            right: 50%;
+            transform: translateX(50%);
+          }
+          .navigation-bar {
+            bottom: 10px;
+            width: 90%;
+            font-size: 0.9rem;
+          }
+          .alerts-panel {
+            bottom: 240px;
+            right: 50%;
+            transform: translateX(50%);
+          }
+        }
+
+        @media (min-width: 1600px) {
+          .search-container input {
+            width: 200px;
+            font-size: 1rem;
+          }
+          .press-button {
+            font-size: 1rem;
+            padding: 10px 16px;
+          }
+          .navigation-bar {
+            font-size: 1.1rem;
+          }
+        }
       `}</style>
     </div>
   );

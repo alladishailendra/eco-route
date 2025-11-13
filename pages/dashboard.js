@@ -7,7 +7,6 @@ export default function Dashboard() {
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState("");
 
-  // Fetch weather data
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -53,6 +52,7 @@ export default function Dashboard() {
           "linear-gradient(135deg, #0f2027, #203a43, #2c5364)",
         fontFamily: "Poppins, sans-serif",
         transition: "background 1s ease",
+        overflowX: "hidden",
       }}
     >
       <Navbar />
@@ -68,6 +68,7 @@ export default function Dashboard() {
           textAlign: "center",
           height: "80vh",
           padding: "1rem",
+          overflowY: "auto",
         }}
       >
         <h1
@@ -136,6 +137,16 @@ export default function Dashboard() {
         @keyframes fadeIn {
           from { opacity: 0; transform: scale(0.95); }
           to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Fully responsive across devices */
+        @media (max-width: 768px) {
+          h1 { font-size: clamp(1.8rem, 5vw, 2.5rem); }
+        }
+        @media (min-width: 1200px) {
+          div[style*="maxWidth: 350px"] {
+            max-width: 400px;
+          }
         }
       `}</style>
     </div>
